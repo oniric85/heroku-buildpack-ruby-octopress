@@ -24,6 +24,7 @@ class LanguagePack::Octopress < LanguagePack::Jekyll
       error ".slugignore contains #{$&}. Octopress generation will fail."
     end
     pipe("ls /app/bin")
+    pipe("which node")
     pipe("env PATH=/app/bin:$PATH EXECJS_RUNTIME=Node bundle exec rake generate 2>&1")
   end
 end
