@@ -23,6 +23,8 @@ class LanguagePack::Octopress < LanguagePack::Jekyll
     if File.exists?(".slugignore") && File.read(".slugignore") =~ /plugins|sass|source/
       error ".slugignore contains #{$&}. Octopress generation will fail."
     end
-    pipe("env PATH=bin:/app/bin:$PATH EXECJS_RUNTIME=Node bundle exec rake generate 2>&1")
+    ENV["RAILS_GROUPS"] ||= "assets"
+    ENV["RAILS_ENV"]    ||= "production"
+    pipe("env PATH=$PATH:bin EXECJS_RUNTIME=Node bundle exec rake generate 2>&1")
   end
 end
